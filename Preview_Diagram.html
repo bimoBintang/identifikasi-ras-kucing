@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview & Download Diagram Sistem Pakar</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .card { background: #fff; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        h1 { text-align: center; color: #333; }
+        h2 { border-bottom: 2px solid #eaeaea; padding-bottom: 10px; color: #444; display: flex; justify-content: space-between; align-items: center;}
+        .instruction { background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        button { background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { background: #0056b3; }
+        .btn-svg { background: #28a745; }
+        .btn-svg:hover { background: #1e7e34; }
+        .mermaid-wrapper { overflow-x: auto; background: white; padding: 10px;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Kumpulan Diagram Sistem Pakar</h1>
+    
+    <div class="instruction">
+        <strong>💡 Update:</strong> Sekarang Anda bisa mengunduh diagram langsung dalam format <b>PNG (HD Jernih)</b> atau <b>SVG (Vector Anti-Pecah)</b> menggunakan tombol di bawah setiap diagram.
+    </div>
+
+    <!-- DFD LEVEL 0 -->
+    <div class="card" id="diagram-1">
+        <h2>1. DFD Level 0 (Context Diagram)</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-1', 'DFD_Level_0')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-1', 'DFD_Level_0')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+graph TD
+    User(["Pengguna"])
+    Admin(["Pakar / Admin"])
+    Sistem(("Sistem Pakar\nIdentifikasi Kucing"))
+
+    User -- "Upload Gambar Kucing" --> Sistem
+    Sistem -- "Hasil Identifikasi Ras & Persentase Keyakinan" --> User
+
+    Admin -- "Input Data Ciri Fisik, Aturan & Bobot" --> Sistem
+    Sistem -- "Laporan Riwayat Identifikasi" --> Admin
+            </pre>
+        </div>
+    </div>
+
+    <!-- DFD LEVEL 1 -->
+    <div class="card" id="diagram-2">
+        <h2>2. DFD Level 1 (Proses Utama)</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-2', 'DFD_Level_1')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-2', 'DFD_Level_1')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+graph TD
+    User(["Pengguna"])
+    Admin(["Pakar / Admin"])
+
+    P1(("1.0\nKelola Basis\nPengetahuan"))
+    P2(("2.0\nProses Gambar\n& Ekstraksi Ciri"))
+    P3(("3.0\nInferensi\nForward Chaining"))
+    P4(("4.0\nKelola Hasil\nIdentifikasi"))
+
+    D1[("D1\nData Ciri Fisik")]
+    D2[("D2\nData Aturan & Bobot")]
+    D3[("D3\nRiwayat Identifikasi (DB)")]
+    D4[("D4\nLocalStorage (Browser)")]
+
+    Admin -- "Input/Update Ciri & Bobot" --> P1
+    P1 -- "Simpan Data Ciri" --> D1
+    P1 -- "Simpan Aturan & Bobot" --> D2
+
+    User -- "Upload Gambar Kucing" --> P2
+    P2 -- "Parameter Ciri Fisik Terdeteksi" --> P3
+
+    D1 -- "Ambil Data Ciri Fisik" --> P3
+    D2 -- "Ambil Nilai Bobot & Aturan" --> P3
+    P3 -- "Hasil Skor Klasifikasi Ras" --> P4
+
+    P4 -- "Simpan Riwayat (Jika Login)" --> D3
+    P4 -- "Simpan Riwayat (Jika Guest)" --> D4
+    P4 -- "Tampilkan Nama Ras & Persentase" --> User
+    D3 -- "Rekap Data Identifikasi" --> Admin
+            </pre>
+        </div>
+    </div>
+
+    <!-- DFD LEVEL 2 -->
+    <div class="card" id="diagram-3">
+        <h2>3. DFD Level 2 (Detail Inferensi 3.0)</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-3', 'DFD_Level_2')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-3', 'DFD_Level_2')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+graph TD
+    InputCiri["Parameter Ciri Fisik Terdeteksi\n(dari Proses 2.0)"]
+    InputBobot[("D2: Data Aturan & Bobot")]
+
+    P3a(("3.1\nInisialisasi\nFakta Awal"))
+    P3b(("3.2\nPencocokan Fakta\ndengan Aturan / Rules"))
+    P3c(("3.3\nAkumulasi\nBobot per Ras"))
+    P3d(("3.4\nPenentuan Ras\nSkor Tertinggi"))
+    P3e(("3.5\nKonversi ke\nPersentase Keyakinan"))
+
+    OutputHasil["Hasil Klasifikasi Ras\n(ke Proses 4.0)"]
+
+    InputCiri --> P3a
+    InputBobot --> P3b
+    P3a -- "Daftar Fakta (Ciri Terdeteksi)" --> P3b
+    P3b -- "Fakta Cocok + Nilai Bobot" --> P3c
+    P3c -- "Total Skor: Anggora / Persia / Kampung" --> P3d
+    P3d -- "Ras dengan Skor Tertinggi" --> P3e
+    P3e --> OutputHasil
+            </pre>
+        </div>
+    </div>
+
+    <!-- FLOWCHART UTAMA -->
+    <div class="card" id="diagram-4">
+        <h2>4. Flowchart Alur Sistem Keseluruhan</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-4', 'Flowchart_Utama')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-4', 'Flowchart_Utama')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart TD
+    A([Mulai]) --> B[Pengguna Upload Gambar Kucing]
+    B --> C[Sistem Memproses & Mengekstrak Ciri Fisik dari Gambar]
+    C --> D{Ciri Fisik\nBerhasil Terdeteksi?}
+
+    D -- Tidak --> E[Tampilkan Pesan:\nGambar Tidak Jelas / Bukan Kucing]
+    E --> Z([Selesai])
+
+    D -- Ya --> F[Inisialisasi Fakta:\nDaftar Ciri Fisik Terdeteksi]
+    F --> G[Muat Basis Aturan & Bobot dari Database]
+
+    G --> H[Inisialisasi Skor:\nAnggora = 0, Persia = 0, Kampung = 0]
+
+    H --> I[Ambil Aturan Berikutnya dari Rule Base]
+    I --> J{Kondisi Aturan\nCocok dengan Fakta?}
+
+    J -- Tidak --> K{Masih Ada\nAturan Lain?}
+    J -- Ya --> L[Tambahkan Bobot Aturan\nke Skor Ras yang Sesuai]
+    L --> K
+
+    K -- Ya --> I
+    K -- Tidak --> M[Hitung Persentase Keyakinan\ntiap Ras dari Total Skor]
+
+    M --> N{Skor Tertinggi\n≥ Threshold?}
+    N -- Tidak --> O[Tampilkan Hasil:\nRas Tidak Dapat Ditentukan\nPersentase terlalu rendah]
+    N -- Ya --> P[Tentukan Ras dengan Skor Tertinggi]
+
+    P --> Q[Tampilkan Hasil Identifikasi:\nNama Ras + Persentase Keyakinan]
+    Q --> R[Simpan Riwayat Identifikasi ke Database/LocalStorage]
+    R --> Z([Selesai])
+
+    O --> Z
+            </pre>
+        </div>
+    </div>
+
+    <!-- FLOWCHART FORWARD CHAINING -->
+    <div class="card" id="diagram-5">
+        <h2>5. Flowchart Detail Mesin Inferensi</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-5', 'Flowchart_Forward_Chaining')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-5', 'Flowchart_Forward_Chaining')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+flowchart TD
+    Start([Mulai Forward Chaining]) --> Init
+
+    Init["Inisialisasi:\n• Fakta = Ciri Fisik Terdeteksi\n• Skor_Anggora = 0\n• Skor_Persia = 0\n• Skor_Kampung = 0"]
+
+    Init --> R1
+
+    subgraph FC["Mesin Inferensi Forward Chaining"]
+        R1["Evaluasi Aturan:\nIF bulu_panjang = true"]
+        R1 --> R1C{Cocok?}
+        R1C -- Ya --> R1A["Skor_Anggora += 0.8\nSkor_Persia  += 0.9"]
+        R1C -- Tidak --> R2
+
+        R1A --> R2["Evaluasi Aturan:\nIF wajah_bulat_pipih = true"]
+        R2 --> R2C{Cocok?}
+        R2C -- Ya --> R2A["Skor_Persia  += 0.9\nSkor_Anggora += 0.3"]
+        R2C -- Tidak --> R3
+
+        R2A --> R3["Evaluasi Aturan:\nIF hidung_pesek = true"]
+        R3 --> R3C{Cocok?}
+        R3C -- Ya --> R3A["Skor_Persia  += 0.9"]
+        R3C -- Tidak --> R4
+
+        R3A --> R4["Evaluasi Aturan:\nIF telinga_runcing = true"]
+        R4 --> R4C{Cocok?}
+        R4C -- Ya --> R4A["Skor_Anggora  += 0.7\nSkor_Kampung += 0.9"]
+        R4C -- Tidak --> R5
+
+        R4A --> R5["Evaluasi Aturan:\nIF tubuh_ramping = true"]
+        R5 --> R5C{Cocok?}
+        R5C -- Ya --> R5A["Skor_Anggora += 0.8\nSkor_Kampung += 0.6"]
+        R5C -- Tidak --> R6
+
+        R5A --> R6["Evaluasi Aturan:\nIF bulu_pendek = true"]
+        R6 --> R6C{Cocok?}
+        R6C -- Ya --> R6A["Skor_Kampung += 0.9\nSkor_Anggora += 0.2"]
+        R6C -- Tidak --> Kalkulasi
+
+        R6A --> Kalkulasi
+    end
+
+    Kalkulasi["Hitung Total Skor:\nTotal = Skor_Anggora + Skor_Persia + Skor_Kampung\n\n% Anggora = Skor_Anggora / Total × 100\n% Persia  = Skor_Persia  / Total × 100\n% Kampung = Skor_Kampung / Total × 100"]
+
+    Kalkulasi --> Konklusi{"Tentukan Konklusi:\nRas mana yang\nnilainya tertinggi?"}
+
+    Konklusi -- "Anggora Tertinggi" --> HA["Konklusi: Kucing Anggora\n(disertai % keyakinan)"]
+    Konklusi -- "Persia Tertinggi" --> HP["Konklusi: Kucing Persia\n(disertai % keyakinan)"]
+    Konklusi -- "Kampung Tertinggi" --> HK["Konklusi: Kucing Kampung\n(disertai % keyakinan)"]
+
+    HA --> End([Selesai])
+    HP --> End
+    HK --> End
+            </pre>
+        </div>
+    </div>
+
+    <!-- ERD -->
+    <div class="card" id="diagram-6">
+        <h2>6. Entity Relationship Diagram (ERD)</h2>
+        <div class="btn-group">
+            <button onclick="downloadPNG('diagram-6', 'ERD_SistemPakar')">⬇️ Download PNG HD</button>
+            <button class="btn-svg" onclick="downloadSVG('diagram-6', 'ERD_SistemPakar')">⬇️ Download SVG</button>
+        </div>
+        <div class="mermaid-wrapper">
+            <pre class="mermaid">
+erDiagram
+    PENGGUNA {
+        int id_pengguna PK
+        string nama
+        string email
+        string password
+        datetime created_at
+    }
+
+    IDENTIFIKASI {
+        int id_identifikasi PK
+        int id_pengguna FK "NULL (jika Guest)"
+        int id_ras FK
+        string path_gambar
+        float skor_anggora
+        float skor_persia
+        float skor_kampung
+        float persentase_keyakinan
+        datetime tanggal_identifikasi
+    }
+
+    RAS_KUCING {
+        int id_ras PK
+        string nama_ras
+        string deskripsi
+        string ciri_umum
+    }
+
+    CIRI_FISIK {
+        int id_ciri PK
+        string nama_ciri
+        string kode_ciri
+        string deskripsi
+    }
+
+    ATURAN {
+        int id_aturan PK
+        int id_ciri FK
+        int id_ras FK
+        float bobot
+        string kondisi
+    }
+
+    ADMIN {
+        int id_admin PK
+        string nama
+        string email
+        string password
+        datetime last_login
+    }
+
+    PENGGUNA ||--o{ IDENTIFIKASI : "melakukan"
+    RAS_KUCING ||--o{ IDENTIFIKASI : "diidentifikasi sebagai"
+    CIRI_FISIK ||--o{ ATURAN : "digunakan dalam"
+    RAS_KUCING ||--o{ ATURAN : "memiliki"
+    ADMIN ||--o{ CIRI_FISIK : "mengelola"
+    ADMIN ||--o{ ATURAN : "mengelola"
+            </pre>
+        </div>
+    </div>
+
+</div>
+
+<!-- SCRIPT DOWNLOADER -->
+<script>
+    function getCleanSvgString(svgNode) {
+        // Clone the node so we don't modify the visible diagram
+        const clone = svgNode.cloneNode(true);
+        
+        // Ensure proper XML namespaces so it renders correctly as a standalone image
+        if (!clone.getAttribute("xmlns")) {
+            clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        }
+        if (!clone.getAttribute("xmlns:xlink")) {
+            clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+        }
+        
+        // Serialize to string
+        const serializer = new XMLSerializer();
+        return serializer.serializeToString(clone);
+    }
+
+    function downloadSVG(containerId, filename) {
+        const container = document.getElementById(containerId);
+        const svg = container.querySelector('svg');
+        if (!svg) return alert("Diagram belum selesai dimuat, silakan tunggu sebentar.");
+
+        const svgString = getCleanSvgString(svg);
+        const blob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename + ".svg";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function downloadPNG(containerId, filename) {
+        const container = document.getElementById(containerId);
+        const svg = container.querySelector('svg');
+        if (!svg) return alert("Diagram belum selesai dimuat, silakan tunggu sebentar.");
+
+        const svgString = getCleanSvgString(svg);
+        const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(svgBlob);
+        
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const scale = 3; // Skala 3x agar resolusi HD
+            
+            // Dapatkan dimensi SVG asli
+            const bbox = svg.getBoundingClientRect();
+            canvas.width = bbox.width * scale;
+            canvas.height = bbox.height * scale;
+
+            const ctx = canvas.getContext("2d");
+            // Set background warna putih (karena SVG transparan)
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.scale(scale, scale);
+            ctx.drawImage(img, 0, 0);
+
+            // Trigger unduhan
+            const pngUrl = canvas.toDataURL("image/png");
+            const a = document.createElement("a");
+            a.href = pngUrl;
+            a.download = filename + ".png";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            URL.revokeObjectURL(url);
+        };
+        img.onerror = function() {
+            alert("Maaf, terjadi kesalahan saat merender diagram menjadi PNG. Silakan gunakan fitur Screenshot komputer Anda.");
+        };
+        img.src = url;
+    }
+</script>
+
+</body>
+</html>
