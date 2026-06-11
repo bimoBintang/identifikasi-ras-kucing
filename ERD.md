@@ -20,7 +20,7 @@ erDiagram
 
     IDENTIFIKASI {
         int id_identifikasi PK
-        int id_pengguna FK
+        int id_pengguna FK "NULL (jika Guest)"
         int id_ras FK
         string path_gambar
         float skor_anggora
@@ -129,7 +129,7 @@ Menyimpan riwayat setiap proses identifikasi yang dilakukan oleh pengguna.
 | Atribut | Tipe | Keterangan |
 |---------|------|-----------|
 | `id_identifikasi` | INT (PK) | Primary Key |
-| `id_pengguna` | INT (FK) | Relasi ke tabel `PENGGUNA` |
+| `id_pengguna` | INT (FK) | Relasi ke tabel `PENGGUNA` (NULL jika Guest/Tamu) |
 | `id_ras` | INT (FK) | Hasil ras yang teridentifikasi |
 | `path_gambar` | VARCHAR | Path/URL gambar yang diupload |
 | `skor_anggora` | FLOAT | Total skor untuk ras Anggora |

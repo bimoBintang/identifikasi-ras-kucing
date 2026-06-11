@@ -43,7 +43,8 @@ graph TD
     %% === Data Store ===
     D1[("📋 D1\nData Ciri Fisik")]
     D2[("⚖️ D2\nData Aturan & Bobot")]
-    D3[("📁 D3\nRiwayat Identifikasi")]
+    D3[("📁 D3\nRiwayat Identifikasi (DB)")]
+    D4[("💾 D4\nLocalStorage (Browser)")]
 
     %% === Aliran Data: Admin → Kelola Pengetahuan ===
     Admin -- "Input/Update Ciri & Bobot" --> P1
@@ -60,7 +61,8 @@ graph TD
     P3 -- "Hasil Skor Klasifikasi Ras" --> P4
 
     %% === Aliran Data: Hasil ===
-    P4 -- "Simpan Riwayat Hasil" --> D3
+    P4 -- "Simpan Riwayat (Jika Login)" --> D3
+    P4 -- "Simpan Riwayat (Jika Guest)" --> D4
     P4 -- "Tampilkan Nama Ras & Persentase" --> User
     D3 -- "Rekap Data Identifikasi" --> Admin
 ```
@@ -105,7 +107,7 @@ graph TD
 |--------|-----------|
 | `([...])` | **Entitas Luar** — Pengguna atau Admin yang berinteraksi dengan sistem |
 | `((...))`  | **Proses** — Aktivitas/fungsi yang mengolah data |
-| `[(...)]`  | **Data Store** — Tempat penyimpanan data (database/tabel) |
+| `[(...)]`  | **Data Store** — Tempat penyimpanan data (database/tabel/local storage) |
 | `-->`      | **Aliran Data** — Arah perpindahan data antar elemen |
 
 ---
@@ -117,4 +119,4 @@ graph TD
 | 1.0 | Kelola Basis Pengetahuan | Admin mengelola ciri fisik, aturan, dan nilai bobot |
 | 2.0 | Proses Gambar & Ekstraksi Ciri | Sistem menganalisis gambar dan mengekstrak ciri fisik kucing |
 | 3.0 | Inferensi Forward Chaining | Mencocokkan ciri dengan aturan dan menghitung skor kecocokan per ras |
-| 4.0 | Kelola Hasil Identifikasi | Menyajikan hasil ras dan persentase, serta menyimpan riwayat |
+| 4.0 | Kelola Hasil Identifikasi | Menyajikan hasil ras dan persentase, serta menyimpan riwayat ke DB `D3` (jika login) atau LocalStorage `D4` (jika guest) |
