@@ -1,0 +1,5 @@
+.DS_Store
+.antigravitycli/
+node_modules/
+dist/
+.env
