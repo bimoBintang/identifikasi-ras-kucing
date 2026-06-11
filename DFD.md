@@ -11,9 +11,9 @@ Menggambarkan sistem secara keseluruhan sebagai satu proses tunggal beserta enti
 
 ```mermaid
 graph TD
-    User(["👤 Pengguna"])
-    Admin(["🧑‍💼 Pakar / Admin"])
-    Sistem(("🐱 Sistem Pakar\nIdentifikasi Kucing"))
+    User(["Pengguna"])
+    Admin(["Pakar / Admin"])
+    Sistem(("Sistem Pakar\nIdentifikasi Kucing"))
 
     User -- "Upload Gambar Kucing" --> Sistem
     Sistem -- "Hasil Identifikasi Ras & Persentase Keyakinan" --> User
@@ -31,8 +31,8 @@ Memecah sistem menjadi 4 proses utama beserta penyimpanan data (Data Store) yang
 ```mermaid
 graph TD
     %% === Entitas Luar ===
-    User(["👤 Pengguna"])
-    Admin(["🧑‍💼 Pakar / Admin"])
+    User(["Pengguna"])
+    Admin(["Pakar / Admin"])
 
     %% === Proses Utama ===
     P1(("1.0\nKelola Basis\nPengetahuan"))
@@ -41,10 +41,10 @@ graph TD
     P4(("4.0\nKelola Hasil\nIdentifikasi"))
 
     %% === Data Store ===
-    D1[("📋 D1\nData Ciri Fisik")]
-    D2[("⚖️ D2\nData Aturan & Bobot")]
-    D3[("📁 D3\nRiwayat Identifikasi (DB)")]
-    D4[("💾 D4\nLocalStorage (Browser)")]
+    D1[("D1\nData Ciri Fisik")]
+    D2[("D2\nData Aturan & Bobot")]
+    D3[("D3\nRiwayat Identifikasi (DB)")]
+    D4[("D4\nLocalStorage (Browser)")]
 
     %% === Aliran Data: Admin → Kelola Pengetahuan ===
     Admin -- "Input/Update Ciri & Bobot" --> P1
@@ -77,7 +77,7 @@ Memecah Proses 3.0 menjadi langkah-langkah detail yang terjadi di dalam mesin in
 graph TD
     %% Input dari proses sebelumnya
     InputCiri["Parameter Ciri Fisik Terdeteksi\n(dari Proses 2.0)"]
-    InputBobot[("⚖️ D2: Data Aturan & Bobot")]
+    InputBobot[("D2: Data Aturan & Bobot")]
 
     %% Sub-proses Forward Chaining
     P3a(("3.1\nInisialisasi\nFakta Awal"))

@@ -9,12 +9,12 @@ Dokumen ini menggambarkan alur logika mesin inferensi menggunakan metode **Forwa
 
 ```mermaid
 flowchart TD
-    A([🚀 Mulai]) --> B[Pengguna Upload Gambar Kucing]
+    A([Mulai]) --> B[Pengguna Upload Gambar Kucing]
     B --> C[Sistem Memproses & Mengekstrak Ciri Fisik dari Gambar]
     C --> D{Ciri Fisik\nBerhasil Terdeteksi?}
 
     D -- Tidak --> E[Tampilkan Pesan:\nGambar Tidak Jelas / Bukan Kucing]
-    E --> Z([🔚 Selesai])
+    E --> Z([Selesai])
 
     D -- Ya --> F[Inisialisasi Fakta:\nDaftar Ciri Fisik Terdeteksi]
     F --> G[Muat Basis Aturan & Bobot dari Database]
@@ -50,13 +50,13 @@ Menggambarkan secara rinci bagaimana setiap ciri fisik yang terdeteksi dicocokka
 
 ```mermaid
 flowchart TD
-    Start([▶ Mulai Forward Chaining]) --> Init
+    Start([Mulai Forward Chaining]) --> Init
 
     Init["Inisialisasi:\n• Fakta = Ciri Fisik Terdeteksi\n• Skor_Anggora = 0\n• Skor_Persia = 0\n• Skor_Kampung = 0"]
 
     Init --> R1
 
-    subgraph FC["🔄 Mesin Inferensi Forward Chaining"]
+    subgraph FC["Mesin Inferensi Forward Chaining"]
         R1["Evaluasi Aturan:\nIF bulu_panjang = true"]
         R1 --> R1C{Cocok?}
         R1C -- Ya --> R1A["Skor_Anggora += 0.8\nSkor_Persia  += 0.9"]
@@ -94,11 +94,11 @@ flowchart TD
 
     Kalkulasi --> Konklusi{"Tentukan Konklusi:\nRas mana yang\nnilainya tertinggi?"}
 
-    Konklusi -- "Anggora Tertinggi" --> HA["✅ Konklusi: Kucing Anggora\n(disertai % keyakinan)"]
-    Konklusi -- "Persia Tertinggi" --> HP["✅ Konklusi: Kucing Persia\n(disertai % keyakinan)"]
-    Konklusi -- "Kampung Tertinggi" --> HK["✅ Konklusi: Kucing Kampung\n(disertai % keyakinan)"]
+    Konklusi -- "Anggora Tertinggi" --> HA["Konklusi: Kucing Anggora\n(disertai % keyakinan)"]
+    Konklusi -- "Persia Tertinggi" --> HP["Konklusi: Kucing Persia\n(disertai % keyakinan)"]
+    Konklusi -- "Kampung Tertinggi" --> HK["Konklusi: Kucing Kampung\n(disertai % keyakinan)"]
 
-    HA --> End([⏹ Selesai])
+    HA --> End([Selesai])
     HP --> End
     HK --> End
 ```
